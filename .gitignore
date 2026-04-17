@@ -1,0 +1,114 @@
+# ============================================================
+# PYTHON & DJANGO
+# ============================================================
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Entorno Virtual
+venv/
+env/
+ENV/
+.venv/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media/
+/staticfiles/
+.env
+
+# Migraciones locales (opcional, descomenta si no quieres versionarlas)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# ============================================================
+# IDE & EDITORES
+# ============================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+.idea/shelf/
+.idea/workspace.xml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.vim/
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================================
+# SISTEMA OPERATIVO
+# ============================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+
+# ============================================================
+# ARCHIVOS DE CONFIGURACIÓN SENSIBLES
+# ============================================================
+
+# Archivos de configuración local
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+
+# Credenciales de base de datos
+/Mysitecoffe/settings_local.py
+
+# ============================================================
+# TEST & COVERAGE
+# ============================================================
+
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# ============================================================
+# DIARIOS Y TEMPORALES
+# ============================================================
+
+*.tmp
+*.bak
+*.swp
+*.swo
+temp/
+tmp/
