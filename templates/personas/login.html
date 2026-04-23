@@ -4,166 +4,447 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Cafetería</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Acceso - Cafetería</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            background: linear-gradient(135deg, #6B4423 0%, #3D2817 100%);
-            background-attachment: fixed;
+            min-height: 100vh;
+            background: #1a0a00;
+            background-image:
+                radial-gradient(ellipse at 20% 50%, rgba(120, 60, 10, 0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(180, 90, 20, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 90%, rgba(90, 40, 5, 0.5) 0%, transparent 50%);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        .coffee-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='25' fill='%23D97706' opacity='0.1'/%3E%3C/svg%3E");
-            background-size: 60px 60px;
+
+        .page-wrapper {
+            display: flex;
+            gap: 0;
+            max-width: 900px;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
         }
-        .login-card {
-            animation: slideUp 0.5s ease-out;
+
+        /* Panel izquierdo decorativo */
+        .panel-left {
+            width: 340px;
+            flex-shrink: 0;
+            background: linear-gradient(160deg, #c8620a 0%, #7a3200 50%, #3d1500 100%);
+            padding: 50px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .panel-left::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 220px; height: 220px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .panel-left::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -40px;
+            width: 260px; height: 260px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+
+        .cup-icon {
+            font-size: 80px;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 4px 12px rgba(251,191,36,0.4));
+            animation: steam 3s ease-in-out infinite;
+        }
+
+        @keyframes steam {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .panel-left h1 {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 8px;
+        }
+
+        .panel-left .tagline {
+            color: #fcd9a0;
+            font-size: 13px;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 35px;
+        }
+
+        .divider-line {
+            width: 50px;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+            margin: 0 auto 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features {
+            list-style: none;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fcd9a0;
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .features li:last-child { border-bottom: none; }
+
+        .features li i {
+            color: #fbbf24;
+            font-size: 12px;
+            width: 16px;
+        }
+
+        /* Panel derecho - formulario */
+        .panel-right {
+            flex: 1;
+            background: #fffaf5;
+            padding: 50px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            margin-bottom: 32px;
+        }
+
+        .form-header .greeting {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #c8620a;
+            margin-bottom: 6px;
+        }
+
+        .form-header h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a0a00;
+            margin-bottom: 6px;
+        }
+
+        .form-header p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Mensajes - solo errores */
+        .alert-error {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: #fff1f0;
+            border: 1px solid #fca5a5;
+            border-left: 4px solid #ef4444;
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 20px;
+        }
+
+        .alert-error i {
+            color: #ef4444;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .alert-error span {
+            color: #7f1d1d;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .alert-success {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-left: 4px solid #22c55e;
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success i {
+            color: #22c55e;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .alert-success span {
+            color: #14532d;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Campos */
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #3d1500;
+            margin-bottom: 7px;
+            letter-spacing: 0.3px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #c8620a;
+            font-size: 14px;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            padding: 13px 14px 13px 40px;
+            border: 2px solid #e8d5c0;
+            border-radius: 10px;
+            font-size: 15px;
+            color: #1a0a00;
+            background: #fff;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-wrap input::placeholder { color: #bbb; }
+
+        .input-wrap input:focus {
+            border-color: #c8620a;
+            box-shadow: 0 0 0 3px rgba(200, 98, 10, 0.12);
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Botón */
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #e07010 0%, #c8620a 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 4px 15px rgba(200,98,10,0.35);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(200,98,10,0.45);
+        }
+
+        .btn-login:active { transform: translateY(0); }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 22px 0;
+        }
+
+        .separator::before, .separator::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e8d5c0;
+        }
+
+        .separator span {
+            font-size: 11px;
+            font-weight: 600;
+            color: #bbb;
+            letter-spacing: 1px;
+        }
+
+        .btn-admin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            background: #f5ede4;
+            color: #7a3200;
+            border: 1px solid #e8d5c0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-admin:hover { background: #ecdfd2; }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 12px;
+            color: #bbb;
+        }
+
+        .footer-note i { color: #c8620a; }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .panel-left { display: none; }
+            .panel-right { padding: 35px 25px; }
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 coffee-pattern">
-    <div class="w-full max-w-md">
-        <!-- Header con decoración de café -->
-        <div class="text-center mb-8">
-            <!-- Icono de café animado -->
-            <div class="inline-block mb-6">
-                <div class="text-6xl animate-bounce">
-                    <i class="fas fa-mug-hot text-amber-100"></i>
-                </div>
-            </div>
-            <h1 class="text-5xl font-bold text-amber-100 mb-2">Cafetería</h1>
-            <p class="text-amber-200 text-lg">Sistema de Gestión de Ventas</p>
+<body>
+    <div class="page-wrapper">
+
+        <!-- Panel izquierdo decorativo -->
+        <div class="panel-left">
+            <i class="fas fa-mug-hot cup-icon"></i>
+            <h1>Cafetería</h1>
+            <p class="tagline">Sistema de Gestión</p>
+            <div class="divider-line"></div>
+            <ul class="features">
+                <li><i class="fas fa-circle-check"></i> Control de ventas</li>
+                <li><i class="fas fa-circle-check"></i> Gestión de pedidos</li>
+                <li><i class="fas fa-circle-check"></i> Reportes en tiempo real</li>
+                <li><i class="fas fa-circle-check"></i> Acceso seguro</li>
+            </ul>
         </div>
 
-        <!-- Card de login con sombra mejorada -->
-        <div class="login-card bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <!-- Encabezado de card -->
-            <div class="bg-gradient-to-r from-amber-700 to-yellow-700 px-8 py-6">
-                <h2 class="text-2xl font-bold text-white text-center">
-                    <i class="fas fa-lock mr-2"></i>Iniciar Sesión
-                </h2>
+        <!-- Panel derecho - formulario -->
+        <div class="panel-right">
+
+            <div class="form-header">
+                <p class="greeting">Bienvenido de nuevo</p>
+                <h2>Iniciar Sesión</h2>
+                <p>Ingresa tus credenciales para continuar</p>
             </div>
 
-            <!-- Contenido del formulario -->
-            <div class="px-8 py-8">
-                <!-- Mensajes de error -->
-                {% if messages %}
-                    <div class="mb-6 space-y-2">
-                        {% for message in messages %}
-                            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded">
-                                <p class="font-bold text-sm mb-1">
-                                    <i class="fas fa-exclamation-circle mr-2"></i>Error de Autenticación
-                                </p>
-                                <p class="text-sm">{{ message }}</p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    {% if 'error' in message.tags %}
+                        <div class="alert-error">
+                            <i class="fas fa-triangle-exclamation"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    {% elif 'success' in message.tags %}
+                        <div class="alert-success">
+                            <i class="fas fa-circle-check"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
 
-                <!-- Formulario -->
-                <form method="POST" class="space-y-6">
-                    {% csrf_token %}
-                    
-                    <!-- Campo Email -->
-                    <div>
-                        <label for="email" class="block text-gray-800 font-bold mb-3">
-                            <i class="fas fa-envelope text-amber-600 mr-2"></i>Correo Electrónico
-                        </label>
-                        <input 
-                            type="email" 
-                            id="email" 
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label for="email">Correo Electrónico</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-envelope"></i>
+                        <input
+                            type="email"
+                            id="email"
                             name="email"
                             required
                             autofocus
-                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-600 focus:outline-none transition text-gray-800 placeholder-gray-400"
-                            placeholder="tu@email.com"
+                            placeholder="usuario@ejemplo.com"
                         >
-                        <p class="text-gray-500 text-xs mt-2">
-                            <i class="fas fa-info-circle mr-1"></i>Usa tu email registrado en el sistema
-                        </p>
                     </div>
+                    <p class="hint"><i class="fas fa-circle-info"></i> Usa tu email registrado en el sistema</p>
+                </div>
 
-                    <!-- Campo Contraseña -->
-                    <div>
-                        <label for="password" class="block text-gray-800 font-bold mb-3">
-                            <i class="fas fa-key text-amber-600 mr-2"></i>Contraseña
-                        </label>
-                        <input 
-                            type="password" 
-                            id="password" 
+                <div class="field">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-lock"></i>
+                        <input
+                            type="password"
+                            id="password"
                             name="password"
                             required
-                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-600 focus:outline-none transition text-gray-800 placeholder-gray-400"
                             placeholder="••••••••"
                         >
                     </div>
-
-                    <!-- Botón Ingresar -->
-                    <button 
-                        type="submit"
-                        class="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 ease-in-out transform hover:scale-105 shadow-lg text-lg"
-                    >
-                        <i class="fas fa-sign-in-alt mr-2"></i>Ingresar al Sistema
-                    </button>
-                </form>
-
-                <!-- Información adicional -->
-                <div class="mt-8 p-4 bg-amber-50 border-l-4 border-amber-600 rounded">
-                    <p class="text-gray-700 text-sm font-semibold mb-3">
-                        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>¿Necesitas ayuda?
-                    </p>
-                    <ul class="text-gray-600 text-sm space-y-2">
-                        <li><i class="fas fa-user-check text-green-600 mr-2"></i><strong>Empleado:</strong> Acceso a tu dashboard personal</li>
-                        <li><i class="fas fa-user-shield text-blue-600 mr-2"></i><strong>Administrador:</strong> Acceso al panel de control</li>
-                        <li><i class="fas fa-user-tie text-purple-600 mr-2"></i><strong>Encargado:</strong> Acceso a gestión de pedidos</li>
-                    </ul>
                 </div>
 
-                <!-- Divider -->
-                <div class="relative my-6">
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-gray-300"></div>
-                    </div>
-                    <div class="relative flex justify-center text-sm">
-                        <span class="px-2 bg-white text-gray-500 text-xs font-semibold">ACCESO RÁPIDO</span>
-                    </div>
-                </div>
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-arrow-right-to-bracket" style="margin-right:8px"></i>Acceder
+                </button>
+            </form>
 
-                <!-- Enlace a admin -->
-                <div class="flex flex-col gap-3">
-                    <a href="/admin/" class="block text-center px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white text-sm font-bold rounded-lg transition">
-                        <i class="fas fa-cog mr-2"></i>Panel de Administración
-                    </a>
-                </div>
+            <div class="separator"><span>O</span></div>
+
+            <a href="/admin/" class="btn-admin">
+                <i class="fas fa-screwdriver-wrench"></i>Panel Administrativo
+            </a>
+
+            <div class="footer-note">
+                <i class="fas fa-shield-halved"></i>
+                Conexión segura &nbsp;·&nbsp; © 2024-2026 Cafetería
             </div>
 
-            <!-- Footer del card -->
-            <div class="bg-gray-50 px-8 py-4 border-t border-gray-200 text-center">
-                <p class="text-gray-600 text-xs">
-                    <i class="fas fa-lock-alt mr-1 text-green-600"></i>
-                    Tu información está protegida y segura
-                </p>
-            </div>
-        </div>
-
-        <!-- Footer principal -->
-        <div class="text-center mt-8">
-            <p class="text-amber-100 text-sm font-medium mb-2">
-                <i class="fas fa-coffee mr-2"></i>Cafetería Sistema de Gestión v1.0
-            </p>
-            <p class="text-amber-200 text-xs">
-                © 2024-2026 Todos los derechos reservados
-            </p>
         </div>
     </div>
 </body>

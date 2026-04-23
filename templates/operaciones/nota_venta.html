@@ -10,28 +10,90 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @media print {
-            body {
+            * {
+                margin: 0 !important;
+                padding: 0 !important;
+                box-sizing: border-box;
+            }
+            html, body {
+                width: 210mm;
+                height: 297mm;
                 background: white;
+                font-size: 10px;
+                line-height: 1.2;
             }
             .no-print {
-                display: none;
+                display: none !important;
             }
+            .print-container {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                page-break-inside: avoid;
+            }
+            .print-content {
+                page-break-inside: avoid;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            h1 { font-size: 14px !important; margin: 0; }
+            h2 { font-size: 11px !important; }
+            h3 { font-size: 10px !important; }
+            p { font-size: 9px !important; margin: 0; }
+            table { font-size: 9px; margin: 0; }
+            td, th { padding: 2px 1px !important; margin: 0; }
+            .py-8 { padding: 2px 0 !important; }
+            .p-6 { padding: 2px !important; }
+            .p-8 { padding: 2px !important; }
+            .mb-8 { margin-bottom: 2px !important; }
+            .mt-8 { margin-top: 2px !important; }
+            .my-8 { margin: 2px 0 !important; }
+            .py-4 { padding: 1px 0 !important; }
+            .pt-4 { padding-top: 1px !important; }
+            .max-w-4xl { width: 100%; margin: 0; }
+            .mx-auto { margin: 0; }
+            .px-4 { padding: 0 !important; }
+            .py-12 { padding: 0 !important; }
+            .rounded-lg { border-radius: 0; }
+            .shadow-2xl, .shadow-lg { box-shadow: none !important; }
+            .gap-8 { gap: 2px !important; }
+            .gap-6 { gap: 1px !important; }
+            .gap-4 { gap: 1px !important; }
+            .grid { column-gap: 1px !important; }
+            .border-b-2 { border-width: 1px !important; }
+            .border-t-2 { border-width: 1px !important; }
+            .overflow-hidden { overflow: visible !important; }
+            .space-y-6 > * + * { margin-top: 2px !important; }
+            .space-y-1 > * + * { margin-top: 1px !important; }
         }
     </style>
 </head>
-<body class="bg-gray-100">
-    <nav class="bg-gradient-to-r from-amber-900 to-yellow-800 shadow-lg no-print">
+<body class="bg-gradient-to-br from-slate-50 to-blue-50">
+    <!-- Botones de acción al inicio -->
+    <div class="flex gap-3 p-3 bg-gradient-to-r from-indigo-100 to-purple-100 no-print">
+        <a href="{% url 'dashboard' %}" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 rounded transition text-center text-sm">
+            <i class="fas fa-home mr-1"></i>Inicio
+        </a>
+        <a href="{% url 'crear_pedido' %}" class="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 rounded transition text-center text-sm">
+            <i class="fas fa-plus mr-1"></i>Nuevo Pedido
+        </a>
+        <button onclick="window.print()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 rounded transition text-sm">
+            <i class="fas fa-print mr-1"></i>Imprimir
+        </button>
+    </div>
+
+    <nav class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center gap-2">
-                    <i class="fas fa-mug-hot text-amber-100 text-2xl"></i>
+                    <i class="fas fa-mug-hot text-cyan-300 text-2xl"></i>
                     <h1 class="text-white text-2xl font-bold">Cafetería</h1>
                 </div>
                 <div class="flex gap-4">
-                    <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+                    <button onclick="window.print()" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded transition">
                         <i class="fas fa-print mr-2"></i>Imprimir
                     </button>
-                    <a href="{% url 'dashboard' %}" class="text-amber-100 hover:text-white transition">
+                    <a href="{% url 'dashboard' %}" class="text-indigo-100 hover:text-white transition">
                         <i class="fas fa-home mr-2"></i>Volver
                     </a>
                 </div>
@@ -39,89 +101,82 @@
         </div>
     </nav>
 
-    <div class="max-w-4xl mx-auto py-8 px-4">
+    <div class="max-w-4xl mx-auto py-2 px-2">
         <!-- Nota de Venta -->
-        <div class="bg-white rounded-lg shadow-2xl overflow-hidden">
-            <!-- Encabezado decorativo -->
-            <div class="bg-gradient-to-r from-amber-700 to-yellow-700 p-8 text-center">
-                <div class="text-5xl mb-4">
-                    <i class="fas fa-mug-hot text-amber-100"></i>
+        <div class="print-container bg-white rounded-lg shadow-2xl overflow-hidden">
+            <!-- Encabezado decorativo - Compacto -->
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-2 text-center print-content">
+                <div class="text-3xl mb-1">
+                    <i class="fas fa-mug-hot text-cyan-200"></i>
                 </div>
-                <h1 class="text-4xl font-bold text-white mb-2">CAFETERÍA</h1>
-                <p class="text-amber-100 text-lg">Un lugar especial para disfrutar del mejor café</p>
+                <h1 class="text-2xl font-bold text-white mb-0">CAFETERÍA</h1>
+                <p class="text-indigo-100 text-xs">Sistema de Gestión</p>
             </div>
 
-            <!-- Número y fecha de nota -->
-            <div class="bg-gray-50 p-6 border-b-2 border-gray-200">
-                <div class="grid grid-cols-3 gap-4">
+            <!-- Número y fecha de nota - Compacto -->
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-2 border-b border-indigo-200 print-content">
+                <div class="grid grid-cols-3 gap-1">
                     <div>
-                        <p class="text-gray-600 text-sm">NOTA DE VENTA</p>
-                        <p class="text-3xl font-bold text-gray-800">#{{ nota.id_nota }}</p>
+                        <p class="text-gray-600 text-xs font-bold">NOTA</p>
+                        <p class="text-2xl font-bold text-indigo-600">#{{ nota.id_nota }}</p>
                     </div>
                     <div class="text-center">
-                        <p class="text-gray-600 text-sm">PEDIDO</p>
-                        <p class="text-3xl font-bold text-amber-600">#{{ pedido.id_pedido }}</p>
+                        <p class="text-gray-600 text-xs font-bold">PEDIDO</p>
+                        <p class="text-2xl font-bold text-purple-600">#{{ pedido.id_pedido }}</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-gray-600 text-sm">FECHA</p>
-                        <p class="text-lg font-bold text-gray-800">{{ nota.fecha|date:"d/m/Y" }}</p>
+                        <p class="text-gray-600 text-xs font-bold">FECHA</p>
+                        <p class="text-sm font-bold text-gray-800">{{ nota.fecha|date:"d/m/Y" }}</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Información de cliente y vendedor -->
-            <div class="p-8 bg-white">
-                <div class="grid grid-cols-2 gap-8 mb-8">
+            <!-- Información de cliente y vendedor - Compacto -->
+            <div class="p-2 bg-white print-content">
+                <div class="grid grid-cols-2 gap-2 mb-2">
                     <!-- Cliente -->
-                    <div class="border-l-4 border-amber-600 pl-6">
-                        <p class="text-gray-600 text-sm font-bold mb-2">CLIENTE</p>
-                        <p class="text-2xl font-bold text-gray-800">{{ pedido.id_cliente.nombre }}</p>
-                        <p class="text-gray-600 mt-2">
-                            <i class="fas fa-id-card mr-2"></i>
-                            CI/NIT: <strong>{{ pedido.id_cliente.ci_o_nit }}</strong>
-                        </p>
+                    <div class="border-l-2 border-indigo-600 pl-2">
+                        <p class="text-gray-600 text-xs font-bold mb-0">CLIENTE</p>
+                        <p class="text-sm font-bold text-gray-800">{{ pedido.id_cliente.nombre }}</p>
+                        <p class="text-gray-600 text-xs mb-0">CI/NIT: {{ pedido.id_cliente.ci_o_nit }}</p>
                     </div>
 
                     <!-- Vendedor -->
-                    <div class="border-l-4 border-green-600 pl-6">
-                        <p class="text-gray-600 text-sm font-bold mb-2">VENDEDOR</p>
-                        <p class="text-2xl font-bold text-gray-800">{{ pedido.id_empleado.nombre_empleado }}</p>
-                        <p class="text-gray-600 mt-2">
-                            <i class="fas fa-envelope mr-2"></i>
-                            {{ pedido.id_empleado.email }}
-                        </p>
+                    <div class="border-l-2 border-purple-600 pl-2">
+                        <p class="text-gray-600 text-xs font-bold mb-0">VENDEDOR</p>
+                        <p class="text-sm font-bold text-gray-800">{{ pedido.id_empleado.nombre_empleado }}</p>
+                        <p class="text-gray-600 text-xs mb-0">{{ pedido.id_empleado.email }}</p>
                     </div>
                 </div>
 
-                <!-- Línea divisoria -->
-                <div class="border-t-2 border-gray-300 my-8"></div>
+                <!-- Línea divisoria simple -->
+                <div class="border-t border-gray-300 my-1"></div>
 
-                <!-- Tabla de productos -->
-                <div class="mb-8">
+                <!-- Tabla de productos - Compacta -->
+                <div class="mb-1 print-content">
                     <table class="w-full">
                         <thead>
-                            <tr class="bg-gray-100 border-b-2 border-gray-300">
-                                <th class="px-4 py-3 text-left text-gray-800 font-bold">PRODUCTO</th>
-                                <th class="px-4 py-3 text-center text-gray-800 font-bold">CANT.</th>
-                                <th class="px-4 py-3 text-right text-gray-800 font-bold">P.UNITARIO</th>
-                                <th class="px-4 py-3 text-right text-gray-800 font-bold">SUBTOTAL</th>
+                            <tr class="bg-indigo-100 border-b border-indigo-300">
+                                <th class="px-1 py-1 text-left text-gray-800 font-bold text-xs">PRODUCTO</th>
+                                <th class="px-1 py-1 text-center text-gray-800 font-bold text-xs">CANT</th>
+                                <th class="px-1 py-1 text-right text-gray-800 font-bold text-xs">P.UNI</th>
+                                <th class="px-1 py-1 text-right text-gray-800 font-bold text-xs">SUB</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for detalle in detalles %}
-                                <tr class="border-b border-gray-200 hover:bg-gray-50">
-                                    <td class="px-4 py-4">
-                                        <p class="font-semibold text-gray-800">{{ detalle.id_producto.nombre }}</p>
-                                        <p class="text-sm text-gray-600">{{ detalle.id_producto.id_categoria.nombre }}</p>
+                                <tr class="border-b border-gray-200">
+                                    <td class="px-1 py-1">
+                                        <p class="font-semibold text-gray-800 text-xs m-0">{{ detalle.id_producto.nombre|truncatewords:3 }}</p>
                                     </td>
-                                    <td class="px-4 py-4 text-center font-semibold text-gray-800">
+                                    <td class="px-1 py-1 text-center font-semibold text-gray-800 text-xs">
                                         {{ detalle.cantidad }}
                                     </td>
-                                    <td class="px-4 py-4 text-right font-semibold text-gray-800">
-                                        Bs {{ detalle.precio_unitario }}
+                                    <td class="px-1 py-1 text-right font-semibold text-gray-800 text-xs">
+                                        {{ detalle.precio_unitario }}
                                     </td>
-                                    <td class="px-4 py-4 text-right font-bold text-amber-600 text-lg">
-                                        Bs {{ detalle.subtotal }}
+                                    <td class="px-1 py-1 text-right font-bold text-indigo-600 text-xs">
+                                        {{ detalle.subtotal }}
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -129,120 +184,76 @@
                     </table>
                 </div>
 
-                <!-- Línea divisoria -->
-                <div class="border-t-2 border-gray-300 my-8"></div>
+                <!-- Línea divisoria simple -->
+                <div class="border-t border-gray-300 my-1"></div>
 
-                <!-- Resumen de totales -->
-                <div class="flex justify-end mb-8">
-                    <div class="w-full md:w-96">
-                        <div class="bg-gray-50 rounded-lg p-6">
-                            <div class="mb-4">
-                                <div class="flex justify-between mb-3">
-                                    <span class="text-gray-700">Subtotal:</span>
-                                    <span class="font-semibold text-gray-800">Bs {{ pedido.total|floatformat:2 }}</span>
+                <!-- Resumen de totales - Compacto -->
+                <div class="flex justify-end mb-1 print-content">
+                    <div class="w-32">
+                        <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded p-1">
+                            <div class="mb-1">
+                                <div class="flex justify-between text-xs mb-0">
+                                    <span>Subtotal:</span>
+                                    <span class="font-semibold">{{ pedido.total|floatformat:2 }}</span>
                                 </div>
-                                <div class="flex justify-between mb-3">
-                                    <span class="text-gray-700">IVA (13%):</span>
-                                    <span class="font-semibold text-gray-800">Bs {{ pedido.total|mul:"0.13"|floatformat:2 }}</span>
+                                <div class="flex justify-between text-xs">
+                                    <span>IVA 13%:</span>
+                                    <span class="font-semibold">{{ pedido.total|mul:"0.13"|floatformat:2 }}</span>
                                 </div>
                             </div>
                             
-                            <div class="border-t-2 border-gray-300 pt-4">
+                            <div class="border-t border-gray-300 py-1">
                                 <div class="flex justify-between">
-                                    <span class="text-lg font-bold text-gray-900">TOTAL A PAGAR:</span>
-                                    <span class="text-3xl font-bold text-amber-600">Bs {{ pedido.total|mul:"1.13"|floatformat:2 }}</span>
+                                    <span class="text-xs font-bold text-gray-900">TOTAL:</span>
+                                    <span class="text-sm font-bold text-indigo-600">{{ pedido.total|mul:"1.13"|floatformat:2 }}</span>
                                 </div>
                             </div>
 
-                    <!-- Método de pago (información static) -->
-                    <div class="mt-6 pt-4 border-t-2 border-gray-300">
-                        <div class="bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-lg">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <i class="fas fa-check-circle text-green-600 text-2xl mr-3"></i>
-                                    <div>
-                                        <p class="text-gray-700 font-semibold text-sm">Método de Pago</p>
-                                        <p class="text-gray-900 font-bold text-lg">
-                                            {% if nota.metodo_pago == 'efectivo' %}
-                                                <i class="fas fa-money-bill mr-2 text-green-600"></i>Efectivo
-                                            {% elif nota.metodo_pago == 'qr' %}
-                                                <i class="fas fa-qrcode mr-2 text-blue-600"></i>QR / Transferencia
-                                            {% elif nota.metodo_pago == 'tarjeta' %}
-                                                <i class="fas fa-credit-card mr-2 text-purple-600"></i>Tarjeta
-                                            {% else %}
-                                                {{ nota.get_metodo_pago_display }}
-                                            {% endif %}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- Método de pago simple -->
+                    <div class="mt-1 pt-1 border-t border-gray-300 text-xs">
+                        <div class="bg-green-50 p-1 rounded">
+                            <p class="text-gray-700 font-bold m-0 text-xs">Pago: 
+                                {% if nota.metodo_pago == 'efectivo' %}
+                                    Efectivo
+                                {% elif nota.metodo_pago == 'qr' %}
+                                    QR
+                                {% elif nota.metodo_pago == 'tarjeta' %}
+                                    Tarjeta
+                                {% else %}
+                                    {{ nota.get_metodo_pago_display }}
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Línea divisoria -->
-                <div class="border-t-2 border-gray-300 my-8"></div>
+                <!-- Línea divisoria simple -->
+                <div class="border-t border-gray-300 my-1"></div>
 
-                <!-- Pie con datos de nota -->
-                <div class="text-center space-y-6">
-                    <!-- Línea para firma -->
-                    <div class="grid grid-cols-3 gap-8 text-center">
-                        <div>
-                            <div class="border-t-2 border-gray-400 pt-4">
-                                <p class="text-gray-600 text-sm font-bold">Firma Cliente</p>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="border-t-2 border-gray-400 pt-4">
-                                <p class="text-gray-600 text-sm font-bold">Firma Vendedor</p>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="border-t-2 border-gray-400 pt-4">
-                                <p class="text-gray-600 text-sm font-bold">Autorizado</p>
-                            </div>
-                        </div>
+                <!-- Pie - Muy compacto -->
+                <div class="text-center print-content">
+                    <!-- Mensaje de agradecimiento - Muy compacto -->
+                    <div class="w-full bg-gradient-to-r from-indigo-50 to-purple-50 rounded p-1 mt-1 mb-1">
+                        <p class="text-gray-700 text-xs text-center font-semibold m-0">
+                            ¡Gracias por su visita!
+                        </p>
+                        <p class="text-gray-600 text-xs m-0">Conserve 5 años</p>
                     </div>
 
-                    <!-- Mensaje de agradecimiento -->
-                    <div class="w-full max-w-2xl mx-auto bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg p-8 mt-8">
-                        <p class="text-gray-700 text-lg text-center font-semibold">
-                            <i class="fas fa-heart text-red-500 mr-2"></i>
-                            ¡Gracias por su visita! Lo esperamos pronto.
-                        </p>
-                        <p class="text-gray-600 text-sm mt-3 text-center">
-                            Conserve este documento como comprobante de compra por 5 años.
-                        </p>
-                    </div>
-
-                    <!-- Información del negocio -->
-                    <div class="text-gray-600 text-sm space-y-1 pt-6">
-                        <p>📱 Teléfono: (+591) XXXX-XXXX</p>
-                        <p>📧 Email: info@cafeteria.com</p>
-                        <p>🌐 Web: www.cafeteria.com</p>
+                    <!-- Información del negocio - Muy compacta -->
+                    <div class="text-gray-600 text-xs space-y-0 pt-1">
+                        <p class="m-0">Tel: (+591) XXXX-XXXX</p>
+                        <p class="m-0">Email: info@cafeteria.com</p>
                     </div>
                 </div>
             </div>
 
             <!-- Pie de página -->
-            <div class="bg-gray-100 p-4 text-center text-gray-600 text-xs">
-                <p>Sistema de Gestión Cafetería v1.0 | Generado automáticamente {{ "now"|date:"d/m/Y H:i:s" }}</p>
+            <div class="bg-gradient-to-r from-indigo-100 to-purple-100 p-1 text-center text-gray-600 text-xs border-t border-indigo-200">
+                <p class="m-0">Sistema v1.0 | {{ "now"|date:"d/m/Y H:i" }}</p>
             </div>
-        </div>
-
-        <!-- Botones de acción -->
-        <div class="flex gap-4 mt-8 no-print">
-            <button onclick="window.print()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition">
-                <i class="fas fa-print mr-2"></i>Imprimir Nota
-            </button>
-            <a href="{% url 'crear_pedido' %}" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition text-center">
-                <i class="fas fa-plus-circle mr-2"></i>Nuevo Pedido
-            </a>
-            <a href="{% url 'dashboard' %}" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 rounded-lg transition text-center">
-                <i class="fas fa-home mr-2"></i>Volver al Inicio
-            </a>
         </div>
     </div>
 

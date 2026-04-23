@@ -8,16 +8,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gradient-to-br from-amber-50 to-orange-100">
-    <nav class="bg-gradient-to-r from-amber-900 to-yellow-800 shadow-lg">
+<body class="bg-gradient-to-br from-slate-50 to-blue-50">
+    <nav class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center gap-2">
-                    <i class="fas fa-mug-hot text-amber-100 text-2xl"></i>
+                    <i class="fas fa-mug-hot text-cyan-300 text-2xl"></i>
                     <h1 class="text-white text-2xl font-bold">Cafetería</h1>
                 </div>
                 <div>
-                    <a href="{% url 'dashboard' %}" class="text-amber-100 hover:text-white transition">
+                    <a href="{% url 'dashboard' %}" class="text-indigo-100 hover:text-white transition">
                         <i class="fas fa-home mr-2"></i>Volver
                     </a>
                 </div>
@@ -37,9 +37,9 @@
 
     <div class="max-w-4xl mx-auto py-8 px-4">
         <!-- Encabezado -->
-        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8 border-t-4 border-indigo-600">
             <h2 class="text-3xl font-bold text-gray-800">
-                <i class="fas fa-plus-circle text-amber-600 mr-2"></i>Crear Nuevo Pedido
+                <i class="fas fa-plus-circle text-indigo-600 mr-2"></i>Crear Nuevo Pedido
             </h2>
             <p class="text-gray-600 mt-2">Selecciona el cliente para iniciar un nuevo pedido</p>
         </div>
@@ -52,12 +52,12 @@
                 <!-- Campo de cliente -->
                 <div class="mb-8">
                     <label for="cliente" class="block text-lg font-bold text-gray-800 mb-4">
-                        <i class="fas fa-user text-amber-600 mr-2"></i>Cliente
+                        <i class="fas fa-user text-indigo-600 mr-2"></i>Cliente
                     </label>
                     
                     {% if clientes %}
                         <div class="flex gap-3">
-                            <select name="cliente" id="cliente" required class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-600 focus:outline-none">
+                            <select name="cliente" id="cliente" required class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-indigo-600 focus:outline-none">
                                 <option value="">-- Selecciona un cliente --</option>
                                 {% for cliente in clientes %}
                                     <option value="{{ cliente.id_cliente }}">
@@ -65,7 +65,7 @@
                                     </option>
                                 {% endfor %}
                             </select>
-                            <button type="button" onclick="abrirModalCliente()" class="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-lg transition">
+                            <button type="button" onclick="abrirModalCliente()" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-lg transition">
                                 <i class="fas fa-plus mr-2"></i>Nuevo
                             </button>
                         </div>
